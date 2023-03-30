@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="blog/header :: header"></div>
+<body>
+<div th:replace="blog/header :: navbar"></div>
+<br/><br/>
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <h2 th:text="${post.title}"></h2>
+            <hr/>
+            <h4 th:text="${post.description}"></h4>
+            <hr/>
+            <div th:utext="${post.content}"></div>
+            <hr/>
+
+            <div>
+                <h4>Comments:</h4>
+                <div th:each="comment : ${post.commentDtos}">
+                    <div>
+                        <p>Name: <em th:text="${comment.name}"></em></p>
+                        <p>Date: <em th:text="${#temporals.format(comment.createdOn, 'dd-MM-yy')}"></em></p>
+                        <p th:text="${comment.content}"></p>
+                        <br/>
+                    </div>
+                </div>
+                <br/>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Leave a comment</h4>
+                    </div>
+                    <div class="card-body">
+                        <form
+                                role="form"
+                                method="post"
+                                th:action="@{/{postUrl}/comments(postUrl=${post.url})}"
+                                th:object="${comment}"
+                        >
+
+                            <div class="row">
+                                <div class="col-md-5 mb-3">
+                                    <input
+                                            class="form-control"
+                                            id="name"
+                                            name="name"
+                                            placeholder="Enter name"
+                                            th:field="*{name}"
+                                            type="text"
+                                    />
+                                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                                       class="text-danger"></p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-5 mb-3">
+                                    <input
+                                            class="form-control"
+                                            id="email"
+                                            name="email"
+                                            placeholder="Enter email"
+                                            th:field="*{email}"
+                                            type="text"
+                                    />
+                                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                       class="text-danger"></p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-9 mb-3">
+                                <textarea
+                                        class="form-control"
+                                        id="content"
+                                        name="content"
+                                        placeholder="Enter comment"
+                                        rows="8"
+                                        th:field="*{content}"
+                                >
+                                </textarea>
+                                    <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}"
+                                       class="text-danger"></p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-5">
+                                    <button type="submit"
+                                            class="btn btn-primary">Submit
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div th:replace="blog/search :: search"></div>
+        </div>
+    </div>
+    <br/><br/>
+</div>
+</body>
+<br/><br/>
+<div th:replace="blog/footer :: footer"></div>
+</html>
