@@ -5,4 +5,4 @@
 deployed on AWS using RDS, Elastic Beanstalk.
 
 open link in browser:
-http://thymeapp-env.eba-4xtib7yn.us-east-2.elasticbeanstalk.com
+http://springboot-thyme-app-env.eba-zrxujq8a.us-east-2.elasticbeanstalk.com/
